@@ -21,8 +21,13 @@ forgejo: forgejo-$(VERSION)-linux-amd64.xz
 	sha256sum -c forgejo-$(VERSION)-linux-amd64.sha256
 	mv forgejo-$(VERSION)-linux-amd64 forgejo
 
-override_dh_auto_build: forgejo
+forgejo.service:
+	curl -s -L -O https://codeberg.org/forgejo/forgejo/raw/branch/forgejo/contrib/systemd/forgejo.service
+
+override_dh_auto_build: forgejo forgejo.service
 
 override_dh_auto_install:
-	mkdir -p $(CURDIR)/debian/forgejo/usr/bin
-	cp forgejo $(CURDIR)/debian/forgejo/usr/bin
+	mkdir -p debian/forgejo/lib/systemd/system
+	mkdir -p debian/forgejo/usr/bin
+	cp forgejo debian/forgejo/usr/bin
+	cp forgejo.service debian/forgejo/lib/systemd/system
