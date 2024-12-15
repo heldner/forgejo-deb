@@ -1,0 +1,18 @@
+Source: forgejo
+Section: vcs
+Priority: optional
+Maintainer: Stanislav Korlev <stan.korolev@mail.ru>
+Build-Depends: debhelper-compat (= 13),
+               xz-utils,
+               dpkg-dev (>= 1.16.1.1)
+Standards-Version: 4.6.2
+Homepage: https://forgejo.org
+Rules-Requires-Root: no
+
+Package: forgejo
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Recommends: git
+Description: Forgejo is a self-hosted lightweight software forge.
+  Easy to install and low maintenance, it just does the job.

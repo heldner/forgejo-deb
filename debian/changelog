@@ -1,0 +1,7 @@
+forgejo (9.0.3-2) stable; urgency=low
+
+  * forgejo 9.0.3
+  * debian:
+    - first release
+
+ -- Stanislav Korolev <stan.korolev@mail.ru>  Sun, 15 Dec 2024 14:28:49 +0300
