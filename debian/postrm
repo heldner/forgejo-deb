@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+GIT_HOME=/srv/git
+FORGEJO_WORK_DIR=/var/lib/forgejo
+FORGEJO_CONFIG=/etc/forgejo/app.ini
+
+remove_base() {
+    rm -rf /etc/forgejo "$FORGEJO_CONFIG" "$FORGEJO_WORK_DIR"
+}
+
+case "$1" in
+  remove)
+    remove_base
+    ;;
+  purge)
+    remove_base
+    ;;
+esac

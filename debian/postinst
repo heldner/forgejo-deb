@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+GIT_HOME=/srv/git
+FORGEJO_WORK_DIR=/var/lib/forgejo
+FORGEJO_CONFIG=/etc/forgejo/app.ini
+
+[ -d "$GIT_HOME" ] || mkdir -p "$GIT_HOME"
+
+id git > /dev/null 2>&1 || adduser --system --shell /bin/sh \
+  --gecos 'Git Version Control' \
+  --uid 505 --group --disabled-password --home "$GIT_HOME" git
+
+if ! [ -d "$FORGEJO_WORK_DIR" ]; then
+  mkdir "$FORGEJO_WORK_DIR"
+fi
+
+chown -R git:git "$FORGEJO_WORK_DIR"
+chmod 750 "$FORGEJO_WORK_DIR"
+
+chown -R git:git "$FORGEJO_CONFIG"
+chmod 0640 "$FORGEJO_CONFIG"
+
+chown -R git:git "$GIT_HOME"
