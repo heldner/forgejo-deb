@@ -23,11 +23,17 @@ forgejo: forgejo-$(VERSION)-linux-amd64.xz
 
 forgejo.service:
 	curl -s -L -O https://codeberg.org/forgejo/forgejo/raw/branch/forgejo/contrib/systemd/forgejo.service
+	sed -i -e 's,local/,,' -e 's,/home/git,/srv/git,' forgejo.service
 
-override_dh_auto_build: forgejo forgejo.service
+app.ini:
+	curl -L -o app.ini https://codeberg.org/forgejo/forgejo/raw/tag/v$(VERSION)/custom/conf/app.example.ini
+
+override_dh_auto_build: forgejo forgejo.service app.ini
 
 override_dh_auto_install:
-	mkdir -p debian/forgejo/lib/systemd/system
 	mkdir -p debian/forgejo/usr/bin
+	mkdir -p debian/forgejo/lib/systemd/system
+	mkdir -p debian/forgejo/etc/forgejo
 	cp forgejo debian/forgejo/usr/bin
 	cp forgejo.service debian/forgejo/lib/systemd/system
+	cp app.ini debian/forgejo/etc/forgejo

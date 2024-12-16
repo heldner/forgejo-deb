@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+GIT_HOME=/srv/git
+FORGEJO_WORK_DIR=/var/lib/forgejo
+
+case "$1" in
+  remove)
+    rm -rf /etc/forgejo
+    ;;
+  purge)
+    rm -rf /etc/forgejo "$FORGEJO_WORK_DIR"
+    rm -rf "$GIT_HOME"
+    ;;
+esac
